@@ -5,19 +5,15 @@ namespace WebApplication1.Models
 {
     public class Service
     {
-        [Key]
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Сost { get; set; }
 
-        [ForeignKey("Teacher")]
-        public Guid TeacherId { get; set; }
+        [Key] public long ServiceId { get; set; }
+        public string ServiceName { get; set; }
+        public string Description { get; set; }
+        public int Cost { get; set; }
+
+        public long TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
-        public Service()
-        {
-            Id = Guid.NewGuid();
-        }
+       
 
 
     }

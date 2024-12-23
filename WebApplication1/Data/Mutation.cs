@@ -10,15 +10,15 @@ namespace WebApplication1.Data
         public async Task<Service?> UpdateService([Service]
         KindergartenDbContext context, Service model)
         {
-            var service = await context.Services.Where(p => p.Id == model.Id).FirstOrDefaultAsync();
+            var service = await context.Services.Where(p => p.ServiceId == model.ServiceId).FirstOrDefaultAsync();
             if (service != null)
             {
-                if (!string.IsNullOrEmpty(model.Name))
-                    service.Name = model.Name;
+                if (!string.IsNullOrEmpty(model.ServiceName))
+                    service.ServiceName = model.ServiceName;
                 if (!string.IsNullOrEmpty(model.Description))
                     service.Description = model.Description;
-                if(!int.IsPositive(model.Сost))
-                    service.Сost = model.Сost;
+                if(!int.IsPositive(model.Cost))
+                    service.Cost = model.Cost;
 
                 context.Services.Update(service);
                 await context.SaveChangesAsync();
@@ -30,7 +30,7 @@ namespace WebApplication1.Data
             [Service]
             KindergartenDbContext context, Service model)
         {
-            var service = await context.Services.Where(p => p.Id != model.Id).FirstOrDefaultAsync();
+            var service = await context.Services.Where(p => p.ServiceId != model.ServiceId).FirstOrDefaultAsync();
             if (service != null)
             {
                 context.Services.Remove(service);
@@ -45,9 +45,9 @@ namespace WebApplication1.Data
         {
             Service service = new Service()
             {
-                Name = model.Name,
+                ServiceName = model.ServiceName,
                 Description = model.Description,
-                Сost = model.Сost
+                Cost = model.Cost
             };
             context.Services.Add(model);
             await context.SaveChangesAsync();
@@ -60,13 +60,13 @@ namespace WebApplication1.Data
         public async Task<Kid?> UpdateKid([Service]
         KindergartenDbContext context, Kid model)
         {
-            var kid = await context.Kids.Where(p => p.Id != model.Id).FirstOrDefaultAsync();
+            var kid = await context.Kids.Where(p => p.KidId != model.KidId).FirstOrDefaultAsync();
             if (kid != null)
             {
-                if (string.IsNullOrEmpty(model.Name))
-                    kid.Name = model.Name;
-                if (int.IsPositive(model.Money))
-                    kid.Money = model.Money;
+                if (string.IsNullOrEmpty(model.KidName))
+                    kid.KidName = model.KidName;
+                if (int.IsPositive(model.KidMoney))
+                    kid.KidMoney = model.KidMoney;
 
                 context.Kids.Update(kid); 
                 await context.SaveChangesAsync();
@@ -79,7 +79,7 @@ namespace WebApplication1.Data
          [Service]
             KindergartenDbContext context, Kid model)
         {
-            var kid = await context.Services.Where(p => p.Id != model.Id).FirstOrDefaultAsync();
+            var kid = await context.Kids.Where(p => p.KidId != model.KidId).FirstOrDefaultAsync();
             if (kid != null)
             {
                 context.Kids.Remove(model);
@@ -95,8 +95,8 @@ namespace WebApplication1.Data
             Kid kid = new Kid()
             {
                
-                Name = model.Name,
-                Money = model.Money,
+                KidName = model.KidName,
+                KidMoney = model.KidMoney,
 
             };
             context.Kids.Add(model);
@@ -110,11 +110,11 @@ namespace WebApplication1.Data
         public async Task<Teacher> UpdateTeacher([Service]
         KindergartenDbContext context, Teacher model)
         {
-            var teacher = await context.Teachers.Where(p => p.Id != model.Id).FirstOrDefaultAsync();
+            var teacher = await context.Teachers.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
             if (teacher != null)
             {
-                if (!string.IsNullOrEmpty(model.Name))
-                    teacher.Name = model.Name;
+                if (!string.IsNullOrEmpty(model.TeacherName))
+                    teacher.TeacherName = model.TeacherName;
                 
                 context.Teachers.Update(teacher);
                 await context.SaveChangesAsync();
@@ -127,7 +127,7 @@ namespace WebApplication1.Data
          [Service]
             KindergartenDbContext context, Teacher model)
         {
-            var teacher = await context.Services.Where(p => p.Id != model.Id).FirstOrDefaultAsync();
+            var teacher = await context.Services.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
             if (teacher != null)
             {
                 context.Teachers.Remove(model);
@@ -143,13 +143,60 @@ namespace WebApplication1.Data
             Teacher teacher = new Teacher()
             {
 
-                Name = model.Name,
+                TeacherName = model.TeacherName,
 
             };
             context.Teachers.Add(model);
             await context.SaveChangesAsync();
             return model;
         }
+
+        // ----- \\
+
+        public async Task<Group> UpdateGroup([Service]
+        KindergartenDbContext context, Group model)
+        {
+            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
+            if (group != null)
+            {
+                if (!string.IsNullOrEmpty(model.Name))
+                    group.Name = model.Name;
+
+                context.Groups.Update(group);
+                await context.SaveChangesAsync();
+            }
+            return group;
+        }
+
+        [Serial]
+        public async Task<Group?> InsertGroup(
+            [Service]
+            KindergartenDbContext context, Group model)
+        {
+            Group group = new Group()
+            {
+                GropId = model.GropId,
+                Name = model.Name,
+                Kid = model.Kid,
+                TeacherId = model.TeacherId,
+            };
+            context.Groups.Add(model);
+            await context.SaveChangesAsync();
+            return model;
+        }
+        [Serial]
+        public async Task DeleteGroup(
+        [Service]
+            KindergartenDbContext context, Group model)
+        {
+            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
+            if (group != null)
+            {
+                context.Groups.Remove(model);
+                await context.SaveChangesAsync();
+            }
+        }
+        
 
 
     }

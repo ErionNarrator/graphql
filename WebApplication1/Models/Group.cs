@@ -5,16 +5,13 @@ namespace WebApplication1.Models
 {
     public class Group
     {
-        [Key]
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        [ForeignKey("KidId")]
-        public Guid KidId { get; set; }
-        public Kid? Kid { get; set; }
 
-        public Group()
-        {
-            Id = Guid.NewGuid();
-        }
+        [Key] public long GropId { get; set; }
+         public string Name { get; set; } 
+        public long KidId{ get; set; }
+        public Kid? Kid { get; set; }
+        public long TeacherId { get; set; }
+        public Teacher? Teacher { get; set; }
+
     }
 }
