@@ -11,20 +11,6 @@ namespace WebApplication1.Data
        
         public static void SeedDate(KindergartenDbContext db)
         {
-            if (!db.Kids.Any())
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    Random r = new Random();
-                    var kid = new Kid()
-                    {   
-                        KidName = Name.FullName(),
-                        KidMoney = r.Next(1, 1000)
-                    };
-                    db.Kids.Add(kid);
-                }
-                db.SaveChanges();
-            }
             if (!db.Teachers.Any())
             {
                 for (int t = 0; t < 10; t++)
@@ -38,16 +24,15 @@ namespace WebApplication1.Data
                 db.SaveChanges();
 
             }
+
             if (!db.Groups.Any())
             {
                 var groups = db.Groups.ToList();
-                var kids = db.Kids.ToList();
                 for (int g = 0; g < 10; g++)
                 {
                     var group = new Group()
                     {
                         Name = Name.FullName(),
-                        KidId = db.Kids.OrderBy(k => Guid.NewGuid()).First().KidId,
                         TeacherId = db.Teachers.OrderBy(c => Guid.NewGuid()).First().TeacherId,
                     };
                     db.Groups.Add(group);
@@ -56,6 +41,25 @@ namespace WebApplication1.Data
                 db.SaveChanges();
 
             }
+
+            if (!db.Kids.Any())
+            {
+                var groups = db.Groups.ToList();
+                for (int i = 0; i < 10; i++)
+                {
+                    Random r = new Random();
+                    var kid = new Kid()
+                    {
+                        KidName = Name.FullName(),
+                        KidMoney = r.Next(1, 1000),
+                        GropId = db.Groups.OrderBy(g => g.GropId).First().GropId
+                    };
+                    db.Kids.Add(kid);
+                }
+                db.SaveChanges();
+            }
+            
+       
             if (!db.Services.Any())
             {
                 var teachers = db.Teachers.ToList();

@@ -7,11 +7,11 @@ namespace WebApplication1.Models
     {
 
         [Key] public long GropId { get; set; }
-         public string Name { get; set; } 
-        public long KidId{ get; set; }
-        public Kid? Kid { get; set; }
+        public string Name { get; set; } 
         public long TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
+        public ICollection<Kid>? Kids{ get; set; }
+
 
     }
 }

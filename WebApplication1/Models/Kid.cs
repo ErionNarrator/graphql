@@ -9,6 +9,8 @@ namespace WebApplication1.Models
         [Key] public long KidId { get; set; }
         public string KidName { get; set; }
         public int KidMoney {  get; set; }
-        public ICollection<Group>? Groups{ get; set; }
+
+        public long GropId { get; set; }
+        public Group? Group { get; set; }
     }
 }

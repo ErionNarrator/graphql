@@ -6,6 +6,7 @@ namespace WebApplication1.Data
 {
     public class Mutation
     {
+        //CRUD для Service
         [Serial]
         public async Task<Service?> UpdateService([Service]
         KindergartenDbContext context, Service model)
@@ -17,13 +18,14 @@ namespace WebApplication1.Data
                     service.ServiceName = model.ServiceName;
                 if (!string.IsNullOrEmpty(model.Description))
                     service.Description = model.Description;
-                if(!int.IsPositive(model.Cost))
+                if (!int.IsPositive(model.Cost))
                     service.Cost = model.Cost;
 
                 context.Services.Update(service);
                 await context.SaveChangesAsync();
             }
             return service;
+
         }
         [Serial]
         public async Task DeleteService(
@@ -37,10 +39,9 @@ namespace WebApplication1.Data
                 await context.SaveChangesAsync();
             }
         }
-
         [Serial]
         public async Task<Service?> InsertService(
-            [Service]
+          [Service]
             KindergartenDbContext context, Service model)
         {
             Service service = new Service()
@@ -54,7 +55,7 @@ namespace WebApplication1.Data
             return model;
         }
 
-        // ----- \\
+        //CRUD для Kid
 
         [Serial]
         public async Task<Kid?> UpdateKid([Service]
@@ -68,7 +69,7 @@ namespace WebApplication1.Data
                 if (int.IsPositive(model.KidMoney))
                     kid.KidMoney = model.KidMoney;
 
-                context.Kids.Update(kid); 
+                context.Kids.Update(kid);
                 await context.SaveChangesAsync();
             }
             return kid;
@@ -94,18 +95,60 @@ namespace WebApplication1.Data
         {
             Kid kid = new Kid()
             {
-               
+
                 KidName = model.KidName,
                 KidMoney = model.KidMoney,
+                GropId = model.GropId,
 
             };
             context.Kids.Add(model);
             await context.SaveChangesAsync();
             return model;
         }
+        //CRUD для Group
+        public async Task<Group> UpdateGroup([Service]
+        KindergartenDbContext context, Group model)
+        {
+            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
+            if (group != null)
+            {
+                if (!string.IsNullOrEmpty(model.Name))
+                    group.Name = model.Name;
 
-        // ----- \\
+                context.Groups.Update(group);
+                await context.SaveChangesAsync();
+            }
+            return group;
+        }
 
+        [Serial]
+        public async Task<Group?> InsertGroup(
+            [Service]
+            KindergartenDbContext context, Group model)
+        {
+            Group group = new Group()
+            {
+                GropId = model.GropId,
+                Name = model.Name,
+                TeacherId = model.TeacherId,
+            };
+            context.Groups.Add(model);
+            await context.SaveChangesAsync();
+            return model;
+        }
+        [Serial]
+        public async Task DeleteGroup(
+        [Service]
+            KindergartenDbContext context, Group model)
+        {
+            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
+            if (group != null)
+            {
+                context.Groups.Remove(model);
+                await context.SaveChangesAsync();
+            }
+        }
+        //CRUD для Group
         [Serial]
         public async Task<Teacher> UpdateTeacher([Service]
         KindergartenDbContext context, Teacher model)
@@ -115,7 +158,7 @@ namespace WebApplication1.Data
             {
                 if (!string.IsNullOrEmpty(model.TeacherName))
                     teacher.TeacherName = model.TeacherName;
-                
+
                 context.Teachers.Update(teacher);
                 await context.SaveChangesAsync();
             }
@@ -150,54 +193,6 @@ namespace WebApplication1.Data
             await context.SaveChangesAsync();
             return model;
         }
-
-        // ----- \\
-
-        public async Task<Group> UpdateGroup([Service]
-        KindergartenDbContext context, Group model)
-        {
-            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
-            if (group != null)
-            {
-                if (!string.IsNullOrEmpty(model.Name))
-                    group.Name = model.Name;
-
-                context.Groups.Update(group);
-                await context.SaveChangesAsync();
-            }
-            return group;
-        }
-
-        [Serial]
-        public async Task<Group?> InsertGroup(
-            [Service]
-            KindergartenDbContext context, Group model)
-        {
-            Group group = new Group()
-            {
-                GropId = model.GropId,
-                Name = model.Name,
-                Kid = model.Kid,
-                TeacherId = model.TeacherId,
-            };
-            context.Groups.Add(model);
-            await context.SaveChangesAsync();
-            return model;
-        }
-        [Serial]
-        public async Task DeleteGroup(
-        [Service]
-            KindergartenDbContext context, Group model)
-        {
-            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
-            if (group != null)
-            {
-                context.Groups.Remove(model);
-                await context.SaveChangesAsync();
-            }
-        }
-        
-
 
     }
 }
