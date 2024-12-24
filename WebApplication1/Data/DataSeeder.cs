@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography;
 using System;
+using System.Linq;
 
 namespace WebApplication1.Data
 {
@@ -48,7 +49,7 @@ namespace WebApplication1.Data
 
             if (!db.Kids.Any())
             {
-                var groups = db.Groups.ToList();
+                var kids = db.Kids.ToList();
                 for (int i = 0; i < 10; i++)
                 {
                     Random r = new Random();
@@ -56,7 +57,7 @@ namespace WebApplication1.Data
                     {
                         KidName = Name.FullName(),
                         KidMoney = r.Next(1, 1000),
-                        GropId = db.Groups.OrderBy(g => g.GropId).First().GropId
+                        GroupId = db.Groups.OrderBy(g => g.GroupId).First().GroupId
                     };
                     db.Kids.Add(kid);
                 }
@@ -66,7 +67,7 @@ namespace WebApplication1.Data
        
             if (!db.Services.Any())
             {
-                var teachers = db.Teachers.ToList();
+                var services = db.Services.ToList();
                 for (int s = 0; s < 10; s++)
                 {
                     Random random = new Random();
@@ -75,7 +76,8 @@ namespace WebApplication1.Data
                         ServiceName = Name.FullName(),
                         Description= Lorem.Sentence(2),
                         Cost = random.Next(1, 1000),
-                        TeacherId = db.Teachers.OrderBy(c => Guid.NewGuid()).First().TeacherId,
+                        //TeacherId = db.Teachers.OrderBy(c => c.TeacherId).First().TeacherId,
+                        GroupId = db.Groups.OrderBy(g => g.GroupId).First().GroupId
 
                     };
                     db.Services.Add(service);

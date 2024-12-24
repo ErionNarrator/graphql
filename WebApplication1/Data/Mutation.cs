@@ -98,7 +98,7 @@ namespace WebApplication1.Data
 
                 KidName = model.KidName,
                 KidMoney = model.KidMoney,
-                GropId = model.GropId,
+                GroupId = model.GroupId,
 
             };
             context.Kids.Add(model);
@@ -109,7 +109,7 @@ namespace WebApplication1.Data
         public async Task<Group> UpdateGroup([Service]
         KindergartenDbContext context, Group model)
         {
-            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
+            var group = await context.Groups.Where(p => p.GroupId != model.GroupId).FirstOrDefaultAsync();
             if (group != null)
             {
                 if (!string.IsNullOrEmpty(model.Name))
@@ -130,7 +130,7 @@ namespace WebApplication1.Data
         {
             Group group = new Group()
             {
-                GropId = model.GropId,
+                GroupId = model.GroupId,
                 Name = model.Name,
                 TeacherId = model.TeacherId,
                 StartDate = model.StartDate,
@@ -145,7 +145,7 @@ namespace WebApplication1.Data
         [Service]
             KindergartenDbContext context, Group model)
         {
-            var group = await context.Groups.Where(p => p.GropId != model.GropId).FirstOrDefaultAsync();
+            var group = await context.Groups.Where(p => p.GroupId != model.GroupId).FirstOrDefaultAsync();
             if (group != null)
             {
                 context.Groups.Remove(model);
@@ -175,7 +175,7 @@ namespace WebApplication1.Data
          [Service]
             KindergartenDbContext context, Teacher model)
         {
-            var teacher = await context.Services.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
+            var teacher = await context.Teachers.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
             if (teacher != null)
             {
                 context.Teachers.Remove(model);

@@ -5,7 +5,9 @@ namespace WebApplication1.Models
 {
     public class Teacher
     {
-        [Key] public long TeacherId {  get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long TeacherId {  get; set; }
         public string TeacherName { get; set; }
         public ICollection<Group> Groups { get; set; }
         public ICollection<Service> Services { get; set; }

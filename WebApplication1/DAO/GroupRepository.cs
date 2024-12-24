@@ -25,7 +25,7 @@ namespace WebApplication1.DAO
 
         public Group GetGroupById(long id)
         {
-            var group = db.Groups.Include(p => p.Kids).FirstOrDefault(p => p.GropId == id);
+            var group = db.Groups.Include(p => p.Kids).FirstOrDefault(p => p.GroupId == id);
             if (group != null) return group!;
             return null!;
         }
