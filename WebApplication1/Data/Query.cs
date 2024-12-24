@@ -33,7 +33,6 @@ namespace WebApplication1.Data
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Teacher> GetTeachers([Service] KindergartenDbContext context) => context.Teachers;
-
+        public IQueryable<Teacher> GetComments([Service] KindergartenDbContext comment) => comment.Teachers;
     }
 }

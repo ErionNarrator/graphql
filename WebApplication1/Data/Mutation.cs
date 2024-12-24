@@ -114,6 +114,8 @@ namespace WebApplication1.Data
             {
                 if (!string.IsNullOrEmpty(model.Name))
                     group.Name = model.Name;
+                group.StartDate = DateTime.Now;
+                group.EndDate = model.EndDate;
 
                 context.Groups.Update(group);
                 await context.SaveChangesAsync();
@@ -131,6 +133,8 @@ namespace WebApplication1.Data
                 GropId = model.GropId,
                 Name = model.Name,
                 TeacherId = model.TeacherId,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
             };
             context.Groups.Add(model);
             await context.SaveChangesAsync();
@@ -148,7 +152,7 @@ namespace WebApplication1.Data
                 await context.SaveChangesAsync();
             }
         }
-        //CRUD для Group
+        //CRUD для Teacher
         [Serial]
         public async Task<Teacher> UpdateTeacher([Service]
         KindergartenDbContext context, Teacher model)
@@ -158,6 +162,7 @@ namespace WebApplication1.Data
             {
                 if (!string.IsNullOrEmpty(model.TeacherName))
                     teacher.TeacherName = model.TeacherName;
+      
 
                 context.Teachers.Update(teacher);
                 await context.SaveChangesAsync();

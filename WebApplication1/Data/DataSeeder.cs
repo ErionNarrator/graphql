@@ -3,6 +3,7 @@ using Faker;
 using System.Data.SqlTypes;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography;
+using System;
 
 namespace WebApplication1.Data
 {
@@ -30,10 +31,13 @@ namespace WebApplication1.Data
                 var groups = db.Groups.ToList();
                 for (int g = 0; g < 10; g++)
                 {
+                    Random random = new Random();
                     var group = new Group()
                     {
                         Name = Name.FullName(),
                         TeacherId = db.Teachers.OrderBy(c => Guid.NewGuid()).First().TeacherId,
+                        StartDate = DateTime.Now.AddDays(-random.Next(1, 30)),
+                        EndDate = DateTime.Now.AddDays(random.Next(1, 30)),
                     };
                     db.Groups.Add(group);
 
