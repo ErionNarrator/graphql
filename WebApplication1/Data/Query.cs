@@ -1,4 +1,5 @@
-﻿using WebApplication1.Models;
+﻿using WebApplication1.DAO;
+using WebApplication1.Models;
 
 namespace WebApplication1.Data
 {
@@ -18,21 +19,27 @@ namespace WebApplication1.Data
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Service> GetServices([Service] KindergartenDbContext context) => context.Services;
+        [GraphQLDescription("Method used to get list of all Service")]
+        public IQueryable<Service> GetServices([Service] IServiceRepository serviceRepository) => serviceRepository.GetServiceOnly();
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Kid> GetKids([Service] KindergartenDbContext context) => context.Kids;
+        [GraphQLDescription("Method used to get list of all Kid")]
+
+        public IQueryable<Kid> GetKids([Service] IKidRepository kidRepository) => kidRepository.GetKidOnly();
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Group> GetGroups([Service] KindergartenDbContext context) => context.Groups;
+        [GraphQLDescription("Method used to get list of all Groups")]
+        public IQueryable<Group> GetGroups([Service] IGroupRepository groupRepository) => groupRepository.GetGroupOnly();    
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Teacher> GetComments([Service] KindergartenDbContext comment) => comment.Teachers;
+        [GraphQLDescription("Method used to get list of all Teacher")]
+
+        public IQueryable<Teacher> GetComments([Service] ITeacherRepository teacherRepository) => teacherRepository.GetTeacherOnly();
     }
 }
