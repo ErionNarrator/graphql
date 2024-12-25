@@ -13,11 +13,6 @@ namespace WebApplication1.Models
         public string Description { get; set; }
         public int Cost { get; set; }
 
-        //[ForeignKey("TeacherId")]
-        //public long TeacherId { get; set; }
-        //public Teacher Teachers { get; set; }
-
-        [ForeignKey("GroupId")]
         public long GroupId { get; set; }
         public Group? Group { get; set; }
        

@@ -6,6 +6,53 @@ namespace WebApplication1.Data
 {
     public class Mutation
     {
+        //CRUD для Teacher
+        [Serial]
+        public async Task<Teacher> UpdateTeacher([Service]
+        KindergartenDbContext context, Teacher model)
+        {
+            var teacher = await context.Teachers.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
+            if (teacher != null)
+            {
+                if (!string.IsNullOrEmpty(model.TeacherName))
+                    teacher.TeacherName = model.TeacherName;
+
+
+                context.Teachers.Update(teacher);
+                await context.SaveChangesAsync();
+            }
+            return teacher;
+        }
+
+        [Serial]
+        public async Task DeleteTeacher(
+         [Service]
+            KindergartenDbContext context, Teacher model)
+        {
+            var teacher = await context.Teachers.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
+            if (teacher != null)
+            {
+                context.Teachers.Remove(model);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        [Serial]
+        public async Task<Teacher?> InsertTeacher(
+            [Service]
+            KindergartenDbContext context, Teacher model)
+        {
+            Teacher teacher = new Teacher()
+            {
+
+                TeacherName = model.TeacherName,
+
+            };
+            context.Teachers.Add(model);
+            await context.SaveChangesAsync();
+            return model;
+        }
+
         //CRUD для Service
         [Serial]
         public async Task<Service?> UpdateService([Service]
@@ -48,7 +95,8 @@ namespace WebApplication1.Data
             {
                 ServiceName = model.ServiceName,
                 Description = model.Description,
-                Cost = model.Cost
+                Cost = model.Cost,
+                GroupId = model.GroupId,
             };
             context.Services.Add(model);
             await context.SaveChangesAsync();
@@ -152,52 +200,7 @@ namespace WebApplication1.Data
                 await context.SaveChangesAsync();
             }
         }
-        //CRUD для Teacher
-        [Serial]
-        public async Task<Teacher> UpdateTeacher([Service]
-        KindergartenDbContext context, Teacher model)
-        {
-            var teacher = await context.Teachers.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
-            if (teacher != null)
-            {
-                if (!string.IsNullOrEmpty(model.TeacherName))
-                    teacher.TeacherName = model.TeacherName;
-      
-
-                context.Teachers.Update(teacher);
-                await context.SaveChangesAsync();
-            }
-            return teacher;
-        }
-
-        [Serial]
-        public async Task DeleteTeacher(
-         [Service]
-            KindergartenDbContext context, Teacher model)
-        {
-            var teacher = await context.Teachers.Where(p => p.TeacherId != model.TeacherId).FirstOrDefaultAsync();
-            if (teacher != null)
-            {
-                context.Teachers.Remove(model);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        [Serial]
-        public async Task<Teacher?> InsertTeacher(
-            [Service]
-            KindergartenDbContext context, Teacher model)
-        {
-            Teacher teacher = new Teacher()
-            {
-
-                TeacherName = model.TeacherName,
-
-            };
-            context.Teachers.Add(model);
-            await context.SaveChangesAsync();
-            return model;
-        }
+       
 
     }
 }

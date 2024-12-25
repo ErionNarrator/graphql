@@ -10,8 +10,6 @@ namespace WebApplication1.Models
         public long TeacherId {  get; set; }
         public string TeacherName { get; set; }
         public ICollection<Group> Groups { get; set; }
-        public ICollection<Service> Services { get; set; }
 
-        
     }
 }

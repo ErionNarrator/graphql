@@ -15,6 +15,7 @@ namespace WebApplication1.Data
         {
             if (!db.Teachers.Any())
             {
+                var teachers = db.Teachers.ToList();
                 for (int t = 0; t < 10; t++)
                 {
                     var teacher = new Teacher()
@@ -57,7 +58,7 @@ namespace WebApplication1.Data
                     {
                         KidName = Name.FullName(),
                         KidMoney = r.Next(1, 1000),
-                        GroupId = db.Groups.OrderBy(g => g.GroupId).First().GroupId
+                        GroupId = db.Groups.OrderBy(g => Guid.NewGuid()).First().GroupId
                     };
                     db.Kids.Add(kid);
                 }
@@ -68,6 +69,8 @@ namespace WebApplication1.Data
             if (!db.Services.Any())
             {
                 var services = db.Services.ToList();
+                var groups = db.Groups.ToList();
+
                 for (int s = 0; s < 10; s++)
                 {
                     Random random = new Random();
@@ -76,8 +79,7 @@ namespace WebApplication1.Data
                         ServiceName = Name.FullName(),
                         Description= Lorem.Sentence(2),
                         Cost = random.Next(1, 1000),
-                        //TeacherId = db.Teachers.OrderBy(c => c.TeacherId).First().TeacherId,
-                        GroupId = db.Groups.OrderBy(g => g.GroupId).First().GroupId
+                        GroupId = db.Groups.OrderBy(g => Guid.NewGuid()).First().GroupId
 
                     };
                     db.Services.Add(service);
